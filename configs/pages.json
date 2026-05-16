@@ -1,0 +1,9 @@
+{
+  "PagesConfig": {
+    "Home": true,
+    "Archive": true,
+    "Anime": true,
+    "Games": true,
+    "Devices": true
+  }
+}

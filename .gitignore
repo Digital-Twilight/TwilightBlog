@@ -1,0 +1,17 @@
+**/bin/
+**/obj/
+
+.vs/
+*.user
+*.suo
+
+.idea/
+
+.DS_Store
+Thumbs.db
+
+configs/anixart.json
+configs/steam.json
+configs/soundcloud.json
+
+!configs/*.example.json

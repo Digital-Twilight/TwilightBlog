@@ -1,0 +1,61 @@
+﻿@page "/post/{Slug}"
+@inject IMarkdownService MarkdownService
+
+<PageTitle>@(_post?.Title ?? "Пост не найден")</PageTitle>
+
+@if (_post is null)
+{
+    <div class="not-found">
+        <h2>404 — Пост не найден</h2>
+        <a href="/">← На главную</a>
+    </div>
+}
+else
+{
+    <article class="post-full">
+        <header class="post-full__header">
+            <div class="post-full__meta">
+                <time>@_post.Published.ToString("dd MMMM yyyy")</time>
+                @if (!string.IsNullOrEmpty(_post.Category))
+                {
+                    <span class="post-full__category">@_post.Category</span>
+                }
+            </div>
+            <h1 class="post-full__title">@_post.Title</h1>
+            @if (_post.Tags.Count > 0)
+            {
+                <div class="post-full__tags">
+                    @foreach (var tag in _post.Tags)
+                    {
+                        <span class="tag">#@tag</span>
+                    }
+                </div>
+            }
+        </header>
+        <div class="post-full__content markdown-body">
+            @((MarkupString)_post.ContentHtml)
+        </div>
+        <footer class="post-full__footer">
+            <a href="/">← Все посты</a>
+        </footer>
+    </article>
+}
+
+@code {
+    [Inject] private IJSRuntime JS { get; set; } = default!;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (_post is not null)
+            await JS.InvokeVoidAsync("highlightCode");
+    }
+
+    [Parameter] public string Slug { get; set; } = "";
+
+    private PostMeta? _post;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _post = await MarkdownService.GetPostBySlugAsync(Slug);
+    }
+}

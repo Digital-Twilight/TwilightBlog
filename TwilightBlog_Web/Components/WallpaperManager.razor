@@ -1,0 +1,40 @@
+﻿@inject IJSRuntime JS
+@inject IOptionsMonitor<WallpaperConfig> WallpaperConfig
+@implements IAsyncDisposable
+
+@code {
+    [Parameter] public string Theme { get; set; } = "dark";
+    [Parameter] public EventCallback<string> ThemeChanged { get; set; }
+
+    private string _lastTheme = "";
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!WallpaperConfig.CurrentValue.Enabled)
+            return;
+
+        if (firstRender || Theme != _lastTheme)
+        {
+            _lastTheme = Theme;
+
+            var config = new
+            {
+                dark = new { images = WallpaperConfig.CurrentValue.Dark.Images },
+                light = new { images = WallpaperConfig.CurrentValue.Light.Images },
+                intervalSeconds = WallpaperConfig.CurrentValue.IntervalSeconds,
+                transitionDuration = WallpaperConfig.CurrentValue.TransitionDuration,
+                dimming = WallpaperConfig.CurrentValue.Dimming,
+                blur = WallpaperConfig.CurrentValue.Blur,
+                size = WallpaperConfig.CurrentValue.Size,
+                position = WallpaperConfig.CurrentValue.Position
+            };
+
+            await JS.InvokeVoidAsync("wallpaperManager.init", config, Theme);
+        }
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        await JS.InvokeVoidAsync("wallpaperManager.destroy");
+    }
+}

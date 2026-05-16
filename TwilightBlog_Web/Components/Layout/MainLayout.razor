@@ -1,0 +1,125 @@
+﻿@inherits LayoutComponentBase
+@inject IOptionsMonitor<BlogConfig> BlogConfig
+@inject IOptionsMonitor<PagesConfig> PagesConfig
+@inject IOptionsMonitor<WallpaperConfig> WallpaperConfig
+
+<div class="tb-layout">
+    <WallpaperManager Theme="@_theme" />
+    <nav class="tb-nav">
+        <div class="tb-nav__inner">
+            <a href="/" class="tb-nav__brand">@BlogConfig.CurrentValue.Title</a>
+            <div class="tb-nav__links">
+                @if (PagesConfig.CurrentValue.Home)
+                {
+                    <a href="/" class="tb-nav__link">Главная</a>
+                }
+                @if (PagesConfig.CurrentValue.Archive)
+                {
+                    <a href="/archive" class="tb-nav__link">Архив</a>
+                }
+                @if (PagesConfig.CurrentValue.Anime)
+                {
+                    <a href="/anime" class="tb-nav__link">Аниме</a>
+                }
+                @if (PagesConfig.CurrentValue.Games)
+                {
+                    <a href="/games" class="tb-nav__link">Игры</a>
+                }
+                @if (PagesConfig.CurrentValue.Devices)
+                {
+                    <a href="/devices" class="tb-nav__link">Девайсы</a>
+                }
+            </div>
+            <ThemeToggle OnThemeChanged="OnThemeChanged" />
+        </div>
+    </nav>
+
+    <div class="tb-body">
+        <aside class="tb-sidebar">
+            <div class="tb-profile">
+                @if (!string.IsNullOrEmpty(BlogConfig.CurrentValue.AvatarUrl))
+                {
+                    <img class="tb-profile__avatar"
+                         src="@BlogConfig.CurrentValue.AvatarUrl"
+                         alt="@BlogConfig.CurrentValue.Author" />
+                }
+                else
+                {
+                    <div class="tb-profile__avatar-placeholder">
+                        @(BlogConfig.CurrentValue.Author.Length > 0 ? BlogConfig.CurrentValue.Author[0].ToString().ToUpper() : "T")
+                    </div>
+                }
+                <h2 class="tb-profile__name">@BlogConfig.CurrentValue.Author</h2>
+                @if (!string.IsNullOrEmpty(BlogConfig.CurrentValue.Subtitle))
+                {
+                    <p class="tb-profile__subtitle">@BlogConfig.CurrentValue.Subtitle</p>
+                }
+                @if (!string.IsNullOrEmpty(BlogConfig.CurrentValue.Description))
+                {
+                    <p class="tb-profile__desc">@BlogConfig.CurrentValue.Description</p>
+                }
+                <div class="tb-profile__social">
+                    @if (!string.IsNullOrEmpty(BlogConfig.CurrentValue.Social?.GitHub))
+                    {
+                        <a href="@BlogConfig.CurrentValue.Social.GitHub" target="_blank" class="tb-profile__social-link">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+                            </svg>
+                            GitHub
+                        </a>
+                    }
+                    @if (!string.IsNullOrEmpty(BlogConfig.CurrentValue.Social?.Telegram))
+                    {
+                        <a href="@BlogConfig.CurrentValue.Social.Telegram" target="_blank" class="tb-profile__social-link">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8l-1.7 8.02c-.12.56-.46.7-.93.43l-2.57-1.89-1.24 1.19c-.14.14-.26.26-.53.26l.19-2.66 4.84-4.37c.21-.19-.05-.29-.32-.1L7.9 14.49l-2.53-.79c-.55-.17-.56-.55.12-.82l9.88-3.81c.46-.17.86.11.27.73z" />
+                            </svg>
+                            Telegram
+                        </a>
+                    }
+                    @if (!string.IsNullOrEmpty(BlogConfig.CurrentValue.Social?.Twitter))
+                    {
+                        <a href="@BlogConfig.CurrentValue.Social.Twitter" target="_blank" class="tb-profile__social-link">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                            </svg>
+                            Twitter
+                        </a>
+                    }
+                    @if (!string.IsNullOrEmpty(BlogConfig.CurrentValue.Social?.Email))
+                    {
+                        <a href="mailto:@BlogConfig.CurrentValue.Social.Email" class="tb-profile__social-link">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
+                            </svg>
+                            Email
+                        </a>
+                    }
+                </div>
+            </div>
+        </aside>
+
+        <main class="tb-main">
+            <div class="tb-container">
+                @Body
+            </div>
+        </main>
+    </div>
+
+    <footer class="tb-footer">
+        <div class="tb-footer__inner">
+            <span>© @DateTime.Now.Year @BlogConfig.CurrentValue.Author</span>
+            <span>Powered by TwilightBlog</span>
+        </div>
+    </footer>
+</div>
+
+@code {
+    private string _theme = "dark";
+
+    private void OnThemeChanged(string theme)
+    {
+        _theme = theme;
+        StateHasChanged();
+    }
+}

@@ -1,0 +1,22 @@
+{
+  "WallpaperConfig": {
+    "Enabled": true,
+    "Blur": 0.0,
+    "Dimming": 0.4,
+    "Size": "cover",
+    "Position": "center",
+    "IntervalSeconds": 30,
+    "Transition": "fade",
+    "TransitionDuration": 1.0,
+    "Light": {
+      "Images": [
+        "/wallpapers/light.jpg"
+      ]
+    },
+    "Dark": {
+      "Images": [
+        "/wallpapers/dark.jpg"
+      ]
+    }
+  }
+}

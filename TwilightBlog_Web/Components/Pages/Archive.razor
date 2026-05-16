@@ -1,0 +1,59 @@
+﻿@page "/archive"
+@inject IMarkdownService MarkdownService
+
+<PageTitle>Архив</PageTitle>
+
+<div class="archive">
+    <h1 class="archive__title">Архив</h1>
+
+    @if (_archive is null)
+    {
+        <p class="loading">Загрузка...</p>
+    }
+    else if (_archive.Count == 0)
+    {
+        <p class="empty">Архив пуст.</p>
+    }
+    else
+    {
+        @foreach (var year in _archive)
+        {
+            <section class="archive__year">
+                <h2 class="archive__year-title">@year.Key</h2>
+                <ul class="archive__list">
+                    @foreach (var post in year.OrderByDescending(p => p.Published))
+                    {
+                        <li class="archive__item">
+                            <span class="archive__date">@post.Published.ToString("MM-dd")</span>
+                            <span class="archive__type archive__type--@post.ArchiveType">
+                                @GetArchiveTypeLabel(post.ArchiveType)
+                            </span>
+                            <a href="/post/@post.Slug" class="archive__link">@post.Title</a>
+                            @foreach (var tag in post.Tags)
+                            {
+                                <span class="tag tag--small">#@tag</span>
+                            }
+                        </li>
+                    }
+                </ul>
+            </section>
+        }
+    }
+</div>
+
+@code {
+    private List<IGrouping<int, PostMeta>>? _archive;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _archive = await MarkdownService.GetArchiveAsync();
+    }
+
+    private static string GetArchiveTypeLabel(string? type) => type switch
+    {
+        "feature" => "✦",
+        "update" => "↑",
+        "fix" => "⚑",
+        _ => "●"
+    };
+}

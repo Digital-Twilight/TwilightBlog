@@ -1,0 +1,58 @@
+﻿@page "/"
+@inject IMarkdownService MarkdownService
+@inject IWebHostEnvironment Env
+
+<PageTitle>@_blogConfig.CurrentValue.Title</PageTitle>
+
+<div class="posts-list">
+    @if (_posts is null)
+    {
+        <p class="loading">Загрузка...</p>
+    }
+    else if (_posts.Count == 0)
+    {
+        <p class="empty">Постов пока нет.</p>
+    }
+    else
+    {
+        @foreach (var post in _posts)
+        {
+            <article class="post-card">
+                <div class="post-card__meta">
+                    <time>@post.Published.ToString("dd MMM yyyy")</time>
+                    @if (!string.IsNullOrEmpty(post.Category))
+                    {
+                        <span class="post-card__category">@post.Category</span>
+                    }
+                </div>
+                <h2 class="post-card__title">
+                    <a href="/post/@post.Slug">@post.Title</a>
+                </h2>
+                @if (post.Tags.Count > 0)
+                {
+                    <div class="post-card__tags">
+                        @foreach (var tag in post.Tags)
+                        {
+                            <span class="tag">#@tag</span>
+                        }
+                    </div>
+                }
+                @if (!string.IsNullOrEmpty(post.Description))
+                {
+                    <p class="post-card__excerpt">@post.Description</p>
+                }
+            </article>
+        }
+    }
+</div>
+
+@code {
+    [Inject] private IOptionsMonitor<BlogConfig> _blogConfig { get; set; } = default!;
+
+    private List<PostMeta>? _posts;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _posts = await MarkdownService.GetAllPostsAsync(includeDrafts: Env.IsDevelopment());
+    }
+}

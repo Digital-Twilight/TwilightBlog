@@ -1,0 +1,13 @@
+{
+  "DevicesConfig": {
+    "Items": [
+      {
+        "Name": "Monitor",
+        "Category": "Display",
+        "Description": "27\" 2K 165Hz IPS",
+        "ImageUrl": null,
+        "Link": null
+      }
+    ]
+  }
+}
