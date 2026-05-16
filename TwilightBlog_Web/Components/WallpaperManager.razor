@@ -4,9 +4,9 @@
 
 @code {
     [Parameter] public string Theme { get; set; } = "dark";
-    [Parameter] public EventCallback<string> ThemeChanged { get; set; }
 
     private string _lastTheme = "";
+    private bool _jsInitialized = false;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -16,6 +16,7 @@
         if (firstRender || Theme != _lastTheme)
         {
             _lastTheme = Theme;
+            _jsInitialized = true;
 
             var config = new
             {
@@ -35,6 +36,14 @@
 
     public async ValueTask DisposeAsync()
     {
-        await JS.InvokeVoidAsync("wallpaperManager.destroy");
+        if (!_jsInitialized)
+            return;
+
+        try
+        {
+            await JS.InvokeVoidAsync("wallpaperManager.destroy");
+        }
+        catch (JSDisconnectedException) { }
+        catch (InvalidOperationException) { }
     }
 }
