@@ -11,6 +11,9 @@ public class AnixartService : IAnixartService
 {
     private readonly HttpClient _http;
     private readonly AnixartConfig _config;
+    private List<AnimeTitle>? _cache;
+    private DateTime _cacheExpiry = DateTime.MinValue;
+    private readonly SemaphoreSlim _lock = new(1, 1);
 
     private static readonly JsonSerializerOptions JsonOptions = new()
     {
@@ -25,36 +28,53 @@ public class AnixartService : IAnixartService
 
     public async Task<List<AnimeTitle>> GetCompletedAsync()
     {
-        List<AnimeTitle> result = [];
-        int page = 0;
+        if (_cache is not null && DateTime.UtcNow < _cacheExpiry)
+            return _cache;
 
-        AnixartListResponse? json;
-        do
+        await _lock.WaitAsync();
+        try
         {
-            string url = $"https://api-s.anixsekai.com/profile/list/all/3/{page}?sort=1&token={_config.Token}";
+            if (_cache is not null && DateTime.UtcNow < _cacheExpiry)
+                return _cache;
 
-            HttpResponseMessage response = await _http.GetAsync(url);
-            if (!response.IsSuccessStatusCode)
-                break;
+            List<AnimeTitle> result = new List<AnimeTitle>();
+            int page = 0;
+            AnixartListResponse? json = null;
 
-            json = await response.Content.ReadFromJsonAsync<AnixartListResponse>(JsonOptions);
-
-            if (json is null || json.Code != 0 || json.Content is null)
-                break;
-
-            foreach (AnixartReleaseItem item in json.Content)
+            do
             {
-                AnimeTitle title = MapToAnimeTitle(item);
-                if (_config.Comments.TryGetValue(item.Id.ToString(), out string? comment))
-                    title.UserComment = comment;
-                result.Add(title);
-            }
+                string url = $"https://api-s.anixsekai.com/profile/list/all/3/{page}?sort=1&token={_config.Token}";
 
-            page++;
+                HttpResponseMessage response = await _http.GetAsync(url);
+                if (!response.IsSuccessStatusCode)
+                    break;
 
-        } while (json.CurrentPage < json.TotalPageCount);
+                json = await response.Content.ReadFromJsonAsync<AnixartListResponse>(JsonOptions);
 
-        return result;
+                if (json is null || json.Code != 0 || json.Content is null)
+                    break;
+
+                foreach (AnixartReleaseItem item in json.Content)
+                {
+                    AnimeTitle title = MapToAnimeTitle(item);
+                    if (_config.Comments.TryGetValue(item.Id.ToString(), out string? comment))
+                        title.UserComment = comment;
+                    result.Add(title);
+                }
+
+                page++;
+
+            } while (json.CurrentPage < json.TotalPageCount);
+
+            _cache = result;
+            _cacheExpiry = DateTime.UtcNow.AddMinutes(_config.CacheMinutes);
+
+            return _cache;
+        }
+        finally
+        {
+            _lock.Release();
+        }
     }
 
     private static AnimeTitle MapToAnimeTitle(AnixartReleaseItem item) => new()
