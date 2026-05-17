@@ -1,0 +1,106 @@
+﻿@page "/anime"
+@inject IAnixartService AnixartService
+
+<PageTitle>Аниме</PageTitle>
+
+<div class="anime-page">
+    <h1 class="page-title">Просмотренное аниме</h1>
+
+    @if (_loading)
+    {
+        <p class="loading">Загрузка...</p>
+    }
+    else if (_error is not null)
+    {
+        <p class="error">@_error</p>
+    }
+    else if (_titles.Count == 0)
+    {
+        <p class="empty">Список пуст.</p>
+    }
+    else
+    {
+        <p class="anime-page__count">@_titles.Count тайтлов</p>
+
+        <div class="anime-grid">
+            @foreach (var title in _titles)
+            {
+                <div class="anime-card">
+                    <div class="anime-card__poster-wrap">
+                        @if (!string.IsNullOrEmpty(title.Image))
+                        {
+                            <img class="anime-card__poster"
+                                 src="@title.Image"
+                                 alt="@title.TitleRu"
+                                 loading="lazy" />
+                        }
+                        else
+                        {
+                            <div class="anime-card__poster-placeholder">?</div>
+                        }
+                        @if (title.Category is not null)
+                        {
+                            <span class="anime-card__category">@title.Category.Name</span>
+                        }
+                    </div>
+                    <div class="anime-card__info">
+                        <h3 class="anime-card__title">@title.TitleRu</h3>
+                        @if (!string.IsNullOrEmpty(title.TitleOriginal))
+                        {
+                            <p class="anime-card__original">@title.TitleOriginal</p>
+                        }
+                        <div class="anime-card__meta">
+                            @if (title.Year.HasValue)
+                            {
+                                <span>@title.Year</span>
+                            }
+                            @if (title.Grade.HasValue)
+                            {
+                                <span class="anime-card__rating">★ @title.Grade.Value.ToString("0.0")</span>
+                            }
+                            @if (title.EpisodesReleased.HasValue)
+                            {
+                                <span>@title.EpisodesReleased эп.</span>
+                            }
+                        </div>
+                        @if (title.Genres.Count > 0)
+                        {
+                            <div class="anime-card__genres">
+                                @foreach (var genre in title.Genres.Take(3))
+                                {
+                                    <span class="tag tag--small">@genre</span>
+                                }
+                            </div>
+                        }
+                        @if (!string.IsNullOrEmpty(title.UserComment))
+                        {
+                            <blockquote class="anime-card__comment">@title.UserComment</blockquote>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+@code {
+    private List<AnimeTitle> _titles = new();
+    private bool _loading = true;
+    private string? _error;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            _titles = await AnixartService.GetCompletedAsync();
+        }
+        catch (Exception ex)
+        {
+            _error = $"Не удалось загрузить список: {ex.Message}";
+        }
+        finally
+        {
+            _loading = false;
+        }
+    }
+}

@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Options;
 using TwilightBlog_Core.Configuration;
 using TwilightBlog_Core.Interfaces;
 using TwilightBlog_Core.Services;
@@ -51,6 +52,21 @@ builder.Services.AddHttpClient("Steam", client =>
 builder.Services.AddHttpClient("SoundCloud", client =>
 {
     client.BaseAddress = new Uri("https://api.soundcloud.com/");
+});
+
+builder.Services.AddHttpClient("Anixart", client =>
+{
+    client.BaseAddress = new Uri("https://api-s.anixsekai.com/");
+    client.DefaultRequestHeaders.Add("User-Agent", "Anixart/8.7.2 (Android)");
+    client.DefaultRequestHeaders.Add("Sign", "");
+});
+
+builder.Services.AddSingleton<IAnixartService>(sp =>
+{
+    IHttpClientFactory factory = sp.GetRequiredService<IHttpClientFactory>();
+    HttpClient http = factory.CreateClient("Anixart");
+    AnixartConfig config = sp.GetRequiredService<IOptionsMonitor<AnixartConfig>>().CurrentValue;
+    return new AnixartService(http, config);
 });
 
 // Blazor
