@@ -4,6 +4,7 @@
 
 @code {
     [Parameter] public string Theme { get; set; } = "dark";
+    [Parameter] public EventCallback<string> ThemeChanged { get; set; }
 
     private string _lastTheme = "";
     private bool _jsInitialized = false;
@@ -13,25 +14,37 @@
         if (!WallpaperConfig.CurrentValue.Enabled)
             return;
 
-        if (firstRender || Theme != _lastTheme)
+        string actualTheme;
+        if (firstRender)
         {
-            _lastTheme = Theme;
-            _jsInitialized = true;
-
-            var config = new
-            {
-                dark = new { images = WallpaperConfig.CurrentValue.Dark.Images },
-                light = new { images = WallpaperConfig.CurrentValue.Light.Images },
-                intervalSeconds = WallpaperConfig.CurrentValue.IntervalSeconds,
-                transitionDuration = WallpaperConfig.CurrentValue.TransitionDuration,
-                dimming = WallpaperConfig.CurrentValue.Dimming,
-                blur = WallpaperConfig.CurrentValue.Blur,
-                size = WallpaperConfig.CurrentValue.Size,
-                position = WallpaperConfig.CurrentValue.Position
-            };
-
-            await JS.InvokeVoidAsync("wallpaperManager.init", config, Theme);
+            actualTheme = await JS.InvokeAsync<string>("themeManager.init");
+            if (actualTheme != Theme)
+                await ThemeChanged.InvokeAsync(actualTheme);
         }
+        else
+        {
+            actualTheme = Theme;
+        }
+
+        if (actualTheme == _lastTheme)
+            return;
+
+        _lastTheme = actualTheme;
+        _jsInitialized = true;
+
+        var config = new
+        {
+            dark = new { images = WallpaperConfig.CurrentValue.Dark.Images },
+            light = new { images = WallpaperConfig.CurrentValue.Light.Images },
+            intervalSeconds = WallpaperConfig.CurrentValue.IntervalSeconds,
+            transitionDuration = WallpaperConfig.CurrentValue.TransitionDuration,
+            dimming = WallpaperConfig.CurrentValue.Dimming,
+            blur = WallpaperConfig.CurrentValue.Blur,
+            size = WallpaperConfig.CurrentValue.Size,
+            position = WallpaperConfig.CurrentValue.Position
+        };
+
+        await JS.InvokeVoidAsync("wallpaperManager.init", config, actualTheme);
     }
 
     public async ValueTask DisposeAsync()

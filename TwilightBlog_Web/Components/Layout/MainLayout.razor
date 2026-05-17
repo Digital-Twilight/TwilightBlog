@@ -4,7 +4,7 @@
 @inject IOptionsMonitor<WallpaperConfig> WallpaperConfig
 
 <div class="tb-layout">
-    <WallpaperManager Theme="@_theme" />
+    <WallpaperManager Theme="@_theme" ThemeChanged="OnThemeChanged" />
     <nav class="tb-nav">
         <div class="tb-nav__inner">
             <a href="/" class="tb-nav__brand">@BlogConfig.CurrentValue.Title</a>

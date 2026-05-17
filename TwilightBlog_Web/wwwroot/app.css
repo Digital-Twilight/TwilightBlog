@@ -854,6 +854,11 @@ a {
     font-weight: 500;
     margin-bottom: 24px;
     color: var(--md-on-surface);
+    background: var(--md-surface);
+    border-radius: var(--md-shape-md);
+    padding: 5px 15px;
+    border: 1px solid var(--md-outline-variant);
+    display: inline-block;
 }
 
 /* ===== Anime page ===== */
@@ -861,6 +866,11 @@ a {
     font-size: 0.85rem;
     color: var(--md-on-surface-variant);
     margin-bottom: 20px;
+    background: var(--md-surface);
+    border-radius: var(--md-shape-sm);
+    padding: 5px 10px;
+    border: 1px solid var(--md-outline-variant);
+    width: fit-content;
 }
 
 .anime-grid {
