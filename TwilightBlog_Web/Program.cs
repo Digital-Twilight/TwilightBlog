@@ -69,6 +69,14 @@ builder.Services.AddSingleton<IAnixartService>(sp =>
     return new AnixartService(http, config);
 });
 
+builder.Services.AddSingleton<ISteamService>(sp =>
+{
+    IHttpClientFactory factory = sp.GetRequiredService<IHttpClientFactory>();
+    HttpClient http = factory.CreateClient("Steam");
+    SteamConfig config = sp.GetRequiredService<IOptionsMonitor<SteamConfig>>().CurrentValue;
+    return new SteamService(http, config);
+});
+
 // Blazor
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
