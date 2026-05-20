@@ -2,12 +2,40 @@
   "DevicesConfig": {
     "Items": [
       {
-        "Name": "Monitor",
-        "Category": "Display",
-        "Description": "27\" 2K 165Hz IPS",
-        "ImageUrl": null,
-        "Link": null
-      }
+        "Name": "Google Pixel 8 Pro",
+        "Category": "Smartphone",
+        "Description": "Google Tensor G3 chip, 6.7-inch Super Actua display, and seven years of OS updates — pure Android at its best.",
+        "ImageUrl": "/img/devices/pixel-8-pro.png",
+        "Link": "https://pixel.withgoogle.com/Pixel_8_Pro"
+      },
+	  {
+        "Name": "Samsung Galaxy Buds Core",
+        "Category": "Earbuds",
+        "Description": "Deep bass, 35-hour battery life, and IP54 sweat resistance. Enjoy seamless connectivity and comfortable fit.",
+        "ImageUrl": "/img/devices/galaxy-buds-core.png",
+        "Link": "https://www.samsung.com/ru/audio-sound/galaxy-buds/galaxy-buds-core-black-sm-r410nzkacis"
+      },
+	  {
+        "Name": "MCHOSE V9 Pro",
+        "Category": "Headset",
+        "Description": "50-hour battery life, 53mm bio-cellulose drivers, and ultra-low 15ms latency. Enjoy virtual 7.1 surround sound and AI noise-cancelling microphone for competitive gaming.",
+        "ImageUrl": "/img/devices/v9-pro.png",
+        "Link": "https://www.mchose.store/products/mchose-v9-series-wireless-gaming-headset"
+      },
+	  {
+        "Name": "Rainy 75",
+        "Category": "Keyboard",
+        "Description": "CNC aluminum 75% keyboard with gasket mount, tri-mode connectivity, and signature \"rain drop\" thock sound.",
+        "ImageUrl": "/img/devices/rainy-75.png",
+        "Link": "https://www.wobkey.com/products/rainy75?variant=45239425269995"
+      },
+	  {
+        "Name": "VXE Dragonfly R1 SE+",
+        "Category": "Mice",
+        "Description": "55g ultra-lightweight wireless gaming mouse with PixArt PAW3395 SE sensor, tri-mode connectivity (2.4GHz/Bluetooth/USB-C), and up to 70-hour battery life.",
+        "ImageUrl": "/img/devices/r1-se-plus.png",
+        "Link": "https://www.atk.store/products/vxe-dragonfly-r1-series-wireless-mouse?variant=44857375391962"
+      }  
     ]
   }
 }

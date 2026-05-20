@@ -1,0 +1,57 @@
+﻿@page "/devices"
+@inject IOptionsMonitor<DevicesConfig> DevicesConfig
+
+<PageTitle>Девайсы</PageTitle>
+
+<div class="devices-page">
+    <h1 class="page-title">Девайсы</h1>
+
+    @if (!DevicesConfig.CurrentValue.Items.Any())
+    {
+        <p class="empty">Список девайсов пуст.</p>
+    }
+    else
+    {
+        var groups = DevicesConfig.CurrentValue.Items
+        .GroupBy(d => d.Category)
+        .OrderBy(g => g.Key);
+
+        @foreach (var group in groups)
+        {
+            <section class="devices-group">
+                <h2 class="devices-group__title">@group.Key</h2>
+                <div class="devices-grid">
+                    @foreach (var device in group)
+                    {
+                        <div class="device-card">
+                            @if (!string.IsNullOrEmpty(device.ImageUrl))
+                            {
+                                <div class="device-card__image-wrap">
+                                    <img class="device-card__image"
+                                         src="@device.ImageUrl"
+                                         alt="@device.Name"
+                                         loading="lazy" />
+                                </div>
+                            }
+                            <div class="device-card__info">
+                                <h3 class="device-card__name">@device.Name</h3>
+                                @if (!string.IsNullOrEmpty(device.Description))
+                                {
+                                    <p class="device-card__desc">@device.Description</p>
+                                }
+                                @if (!string.IsNullOrEmpty(device.Link))
+                                {
+                                    <a href="@device.Link"
+                                       target="_blank"
+                                       class="device-card__link">
+                                        Подробнее →
+                                    </a>
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+            </section>
+        }
+    }
+</div>

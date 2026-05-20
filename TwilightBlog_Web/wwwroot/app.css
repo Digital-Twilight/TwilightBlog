@@ -9,6 +9,7 @@
     --md-secondary-container: #E8DEF8;
     --md-on-secondary-container: #1D192B;
     --md-surface: #FFFBFE;
+    --md-surface-alpha: rgba(255, 251, 254, 0.90);
     --md-on-surface: #1C1B1F;
     --md-surface-variant: #E7E0EC;
     --md-on-surface-variant: #49454F;
@@ -40,6 +41,7 @@
     --md-secondary-container: #4A4458;
     --md-on-secondary-container: #E8DEF8;
     --md-surface: #1C1B1F;
+    --md-surface-alpha: rgba(28, 27, 31, 0.90);
     --md-on-surface: #E6E1E5;
     --md-surface-variant: #49454F;
     --md-on-surface-variant: #CAC4D0;
@@ -121,7 +123,7 @@ a {
     position: sticky;
     top: 0;
     z-index: 100;
-    background: var(--md-surface);
+    background: var(--md-surface-alpha);
     border-bottom: 1px solid var(--md-outline-variant);
     box-shadow: var(--md-elevation-1);
 }
@@ -181,7 +183,7 @@ a {
 
 /* ===== Footer ===== */
 .tb-footer {
-    background: var(--md-surface);
+    background: var(--md-surface-alpha);
     border-top: 1px solid var(--md-outline-variant);
     padding: 24px 0;
     position: relative;
@@ -215,7 +217,7 @@ a {
 }
 
 .post-card {
-    background: var(--md-surface);
+    background: var(--md-surface-alpha);
     border-radius: var(--md-shape-lg);
     padding: 28px 32px;
     box-shadow: var(--md-elevation-1);
@@ -299,7 +301,7 @@ a {
 
 /* ===== Post full ===== */
 .post-full {
-    background: var(--md-surface);
+    background: var(--md-surface-alpha);
     border-radius: var(--md-shape-lg);
     padding: 48px 56px;
     box-shadow: var(--md-elevation-1);
@@ -485,7 +487,7 @@ a {
     .markdown-body td {
         padding: 10px 16px;
         border-bottom: 1px solid var(--md-outline-variant);
-        background: var(--md-surface);
+        background: var(--md-surface-alpha);
     }
 
     .markdown-body tr:last-child td {
@@ -509,6 +511,11 @@ a {
     font-weight: 500;
     margin-bottom: 40px;
     color: var(--md-on-surface);
+    background: var(--md-surface-alpha);
+    border-radius: var(--md-shape-md);
+    padding: 5px 15px;
+    border: 1px solid var(--md-outline-variant);
+    width: fit-content;
 }
 
 .archive__year {
@@ -521,7 +528,11 @@ a {
     color: var(--md-primary);
     margin-bottom: 16px;
     padding-bottom: 10px;
-    border-bottom: 2px solid var(--md-primary-container);
+    background: var(--md-surface-alpha);
+    border-radius: var(--md-shape-md);
+    padding: 5px 15px;
+    border: 1px solid var(--md-outline-variant);
+    border-bottom: 3px solid var(--md-primary-container);
 }
 
 .archive__list {
@@ -538,7 +549,7 @@ a {
     font-size: 0.9rem;
     padding: 8px 12px;
     border-radius: var(--md-shape-sm);
-    background: var(--md-surface);
+    background: var(--md-surface-alpha);
     border: 1px solid var(--md-outline-variant);
     transition: background 0.15s, border-color 0.15s;
 }
@@ -660,9 +671,9 @@ a {
 }
 
 .tb-profile {
-    background: var(--md-surface);
+    background: var(--md-surface-alpha);
     border-radius: var(--md-shape-lg);
-    padding: 28px 20px;
+    padding: 20px 20px;
     border: 1px solid var(--md-outline-variant);
     box-shadow: var(--md-elevation-1);
     display: flex;
@@ -675,7 +686,7 @@ a {
 .tb-profile__avatar {
     width: 100%;
     height: 100%;
-    border-radius: 10%;
+    border-radius: var(--md-shape-lg);
     object-fit: cover;
     border: 3px solid var(--md-primary-container);
     box-shadow: var(--md-elevation-2);
@@ -754,7 +765,7 @@ a {
 
 /* ===== Footer ===== */
 .tb-footer {
-    background: var(--md-surface);
+    background: var(--md-surface-alpha);
     border-top: 1px solid var(--md-outline-variant);
     padding: 20px 24px;
     position: relative;
@@ -769,62 +780,6 @@ a {
     justify-content: space-between;
     font-size: 0.82rem;
     color: var(--md-on-surface-variant);
-}
-
-/* ===== Responsive ===== */
-@media (max-width: 768px) {
-    .tb-body {
-        flex-direction: column;
-        padding: 24px 16px 48px;
-    }
-
-    .tb-sidebar {
-        width: 100%;
-        position: static;
-    }
-
-    .tb-profile {
-        flex-direction: row;
-        text-align: left;
-        flex-wrap: wrap;
-        gap: 16px;
-    }
-
-    .tb-profile__avatar,
-    .tb-profile__avatar-placeholder {
-        width: 72px;
-        height: 72px;
-        font-size: 1.8rem;
-        flex-shrink: 0;
-    }
-
-    .tb-profile__social {
-        flex-direction: row;
-        flex-wrap: wrap;
-    }
-
-    .tb-nav__inner {
-        position: relative;
-        flex-direction: column;
-        height: auto;
-        padding: 12px 16px;
-        gap: 8px;
-        align-items: center;
-    }
-
-    .tb-nav__links {
-        position: static;
-        transform: none;
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-
-    .tb-theme-toggle {
-        position: absolute;
-        top: 12px;
-        right: 16px;
-        margin-left: 0;
-    }
 }
 
 /* ===== Theme toggle ===== */
@@ -854,7 +809,7 @@ a {
     font-weight: 500;
     margin-bottom: 24px;
     color: var(--md-on-surface);
-    background: var(--md-surface);
+    background: var(--md-surface-alpha);
     border-radius: var(--md-shape-md);
     padding: 5px 15px;
     border: 1px solid var(--md-outline-variant);
@@ -863,12 +818,13 @@ a {
 
 /* ===== Anime page ===== */
 .anime-page__count {
-    font-size: 0.85rem;
+    font-size: 1.1rem;
     color: var(--md-on-surface-variant);
     margin-bottom: 20px;
-    background: var(--md-surface);
+    padding-bottom: 10px;
+    background: var(--md-surface-alpha);
+    padding: 5px 15px;
     border-radius: var(--md-shape-sm);
-    padding: 5px 10px;
     border: 1px solid var(--md-outline-variant);
     width: fit-content;
 }
@@ -882,7 +838,7 @@ a {
 .anime-card {
     display: flex;
     gap: 20px;
-    background: var(--md-surface);
+    background: var(--md-surface-alpha);
     border-radius: var(--md-shape-lg);
     border: 1px solid var(--md-outline-variant);
     box-shadow: var(--md-elevation-1);
@@ -989,7 +945,148 @@ a {
     padding: 40px 0;
 }
 
-@media (max-width: 444px) {
+/* ===== Devices ===== */
+.devices-group {
+    margin-bottom: 40px;
+}
+
+.devices-group__title {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--md-primary);
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    background: var(--md-surface-alpha);
+    border-radius: var(--md-shape-md);
+    padding: 5px 15px;
+    border: 1px solid var(--md-outline-variant);
+    border-bottom: 3px solid var(--md-primary-container);
+}
+
+.devices-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+}
+
+.device-card {
+    background: var(--md-surface-alpha);
+    border-radius: var(--md-shape-lg);
+    border: 1px solid var(--md-outline-variant);
+    box-shadow: var(--md-elevation-1);
+    overflow: hidden;
+    transition: box-shadow 0.2s, transform 0.2s;
+    display: flex;
+    flex-direction: column;
+}
+
+    .device-card:hover {
+        box-shadow: var(--md-elevation-2);
+        transform: translateY(-2px);
+    }
+
+.device-card__image-wrap {
+    width: 100%;
+    overflow: hidden;
+}
+
+.device-card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s;
+}
+
+.device-card:hover .device-card__image {
+    transform: scale(1.04);
+}
+
+.device-card__info {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+}
+
+.device-card__name {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--md-on-surface);
+}
+
+.device-card__desc {
+    font-size: 0.85rem;
+    color: var(--md-on-surface-variant);
+    line-height: 1.5;
+}
+
+.device-card__link {
+    font-size: 0.85rem;
+    color: var(--md-primary);
+    font-weight: 500;
+    margin-top: auto;
+}
+
+    .device-card__link:hover {
+        text-decoration: underline;
+    }
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+    .tb-body {
+        flex-direction: column;
+        padding: 24px 16px 48px;
+    }
+
+    .tb-sidebar {
+        width: 100%;
+        position: static;
+    }
+
+    .tb-profile {
+        flex-direction: row;
+        text-align: left;
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+
+    .tb-profile__avatar,
+    .tb-profile__avatar-placeholder {
+        width: 72px;
+        height: 72px;
+        font-size: 1.8rem;
+        flex-shrink: 0;
+    }
+
+    .tb-profile__social {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .tb-nav__inner {
+        position: relative;
+        flex-direction: column;
+        height: auto;
+        padding: 12px 16px;
+        gap: 8px;
+        align-items: center;
+    }
+
+    .tb-nav__links {
+        position: static;
+        transform: none;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .tb-theme-toggle {
+        position: absolute;
+        top: 12px;
+        right: 16px;
+        margin-left: 0;
+    }
+
     .anime-card {
         flex-direction: column;
     }
