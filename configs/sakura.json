@@ -1,11 +1,11 @@
 {
   "SakuraConfig": {
     "Enabled": true,
-    "Count": 30,
+    "Count": 120,
     "MinSpeed": 1.0,
     "MaxSpeed": 3.0,
     "MinSize": 8.0,
-    "MaxSize": 18.0,
+    "MaxSize": 26.0,
     "Opacity": 0.7,
     "Color": "#ffb7c5"
   }

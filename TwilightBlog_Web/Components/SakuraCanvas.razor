@@ -1,0 +1,39 @@
+﻿@inject IJSRuntime JS
+@inject IOptionsMonitor<SakuraConfig> SakuraConfig
+@implements IAsyncDisposable
+
+@code {
+    private bool _jsInitialized = false;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender) return;
+        if (!SakuraConfig.CurrentValue.Enabled) return;
+
+        _jsInitialized = true;
+
+        var config = new
+        {
+            count = SakuraConfig.CurrentValue.Count,
+            minSpeed = SakuraConfig.CurrentValue.MinSpeed,
+            maxSpeed = SakuraConfig.CurrentValue.MaxSpeed,
+            minSize = SakuraConfig.CurrentValue.MinSize,
+            maxSize = SakuraConfig.CurrentValue.MaxSize,
+            opacity = SakuraConfig.CurrentValue.Opacity,
+            color = SakuraConfig.CurrentValue.Color
+        };
+
+        await JS.InvokeVoidAsync("sakuraManager.init", config);
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        if (!_jsInitialized) return;
+        try
+        {
+            await JS.InvokeVoidAsync("sakuraManager.destroy");
+        }
+        catch (JSDisconnectedException) { }
+        catch (InvalidOperationException) { }
+    }
+}
