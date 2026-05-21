@@ -1,18 +1,19 @@
 ﻿@page "/archive"
 @inject IMarkdownService MarkdownService
+@inject IStringLocalizer<UI> L
 
-<PageTitle>Архив</PageTitle>
+<PageTitle>@L["Nav.Archive"]</PageTitle>
 
 <div class="archive">
-    <h1 class="archive__title">Архив</h1>
+    <h1 class="archive__title">@L["Page.Archive.Title"]</h1>
 
     @if (_archive is null)
     {
-        <p class="loading">Загрузка...</p>
+        <p class="loading">@L["Page.Home.Loading"]</p>
     }
     else if (_archive.Count == 0)
     {
-        <p class="empty">Архив пуст.</p>
+        <p class="empty">@L["Page.Archive.Empty"]</p>
     }
     else
     {

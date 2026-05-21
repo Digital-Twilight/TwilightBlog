@@ -8,10 +8,4 @@ public class SteamGame
     public string? HeaderUrl { get; set; }
     public int PlaytimeMinutes { get; set; }
     public string? UserComment { get; set; }
-
-    public string PlaytimeFormatted => PlaytimeMinutes switch
-    {
-        < 60 => $"{PlaytimeMinutes} мин",
-        _ => $"{PlaytimeMinutes / 60} ч {PlaytimeMinutes % 60} мин"
-    };
 }

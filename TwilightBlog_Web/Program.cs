@@ -81,6 +81,8 @@ builder.Services.AddSingleton<ISteamService>(sp =>
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
+builder.Services.AddLocalization();
+
 WebApplication app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
@@ -91,6 +93,21 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
+BlogConfig blogConfig = builder.Configuration
+    .GetSection(nameof(BlogConfig))
+    .Get<BlogConfig>() ?? new BlogConfig();
+
+System.Globalization.CultureInfo culture = new System.Globalization.CultureInfo(blogConfig.Language);
+
+app.UseRequestLocalization(new RequestLocalizationOptions
+{
+    DefaultRequestCulture = new Microsoft.AspNetCore.Localization.RequestCulture(culture),
+    SupportedCultures = [culture],
+    SupportedUICultures = [culture],
+    RequestCultureProviders = []
+});
+
 app.UseAntiforgery();
 
 app.MapRazorComponents<App>()

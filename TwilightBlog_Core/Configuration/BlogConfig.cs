@@ -8,6 +8,7 @@ public class BlogConfig
     public string Description { get; set; } = "";
     public string AvatarUrl { get; set; } = "";
     public SocialLinks Social { get; set; } = new();
+    public string Language { get; set; } = "ru";
 }
 
 public class SocialLinks

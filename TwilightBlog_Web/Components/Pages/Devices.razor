@@ -1,14 +1,15 @@
 ﻿@page "/devices"
 @inject IOptionsMonitor<DevicesConfig> DevicesConfig
+@inject IStringLocalizer<UI> L
 
-<PageTitle>Девайсы</PageTitle>
+<PageTitle>@L["Nav.Devices"]</PageTitle>
 
 <div class="devices-page">
-    <h1 class="page-title">Девайсы</h1>
+    <h1 class="page-title">@L["Page.Devices.Title"]</h1>
 
     @if (!DevicesConfig.CurrentValue.Items.Any())
     {
-        <p class="empty">Список девайсов пуст.</p>
+        <p class="empty">@L["Page.Devices.Empty"]</p>
     }
     else
     {
@@ -44,7 +45,7 @@
                                     <a href="@device.Link"
                                        target="_blank"
                                        class="device-card__link">
-                                        Подробнее →
+                                        @L["Page.Devices.More"]
                                     </a>
                                 }
                             </div>

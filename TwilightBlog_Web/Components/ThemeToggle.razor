@@ -1,6 +1,7 @@
 ﻿@inject IJSRuntime JS
+@inject IStringLocalizer<UI> L
 
-<button class="tb-theme-toggle" @onclick="Toggle" title="Переключить тему">
+<button class="tb-theme-toggle" @onclick="Toggle" title=@L["Theme.Toggle"]>
     @if (_isDark)
     {
         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">

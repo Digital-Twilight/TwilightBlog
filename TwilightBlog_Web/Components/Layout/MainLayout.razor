@@ -2,6 +2,7 @@
 @inject IOptionsMonitor<BlogConfig> BlogConfig
 @inject IOptionsMonitor<PagesConfig> PagesConfig
 @inject IOptionsMonitor<WallpaperConfig> WallpaperConfig
+@inject IStringLocalizer<UI> L
 
 <div class="tb-layout">
     <WallpaperManager Theme="@_theme" ThemeChanged="OnThemeChanged" />
@@ -11,23 +12,23 @@
             <div class="tb-nav__links">
                 @if (PagesConfig.CurrentValue.Home)
                 {
-                    <a href="/" class="tb-nav__link">Главная</a>
+                    <a href="/" class="tb-nav__link">@L["Nav.Home"]</a>
                 }
                 @if (PagesConfig.CurrentValue.Archive)
                 {
-                    <a href="/archive" class="tb-nav__link">Архив</a>
+                    <a href="/archive" class="tb-nav__link">@L["Nav.Archive"]</a>
                 }
                 @if (PagesConfig.CurrentValue.Anime)
                 {
-                    <a href="/anime" class="tb-nav__link">Аниме</a>
+                    <a href="/anime" class="tb-nav__link">@L["Nav.Anime"]</a>
                 }
                 @if (PagesConfig.CurrentValue.Games)
                 {
-                    <a href="/games" class="tb-nav__link">Игры</a>
+                    <a href="/games" class="tb-nav__link">@L["Nav.Games"]</a>
                 }
                 @if (PagesConfig.CurrentValue.Devices)
                 {
-                    <a href="/devices" class="tb-nav__link">Девайсы</a>
+                    <a href="/devices" class="tb-nav__link">@L["Nav.Devices"]</a>
                 }
             </div>
             <ThemeToggle OnThemeChanged="OnThemeChanged" />
@@ -109,7 +110,7 @@
     <footer class="tb-footer">
         <div class="tb-footer__inner">
             <span>© @DateTime.Now.Year @BlogConfig.CurrentValue.Author</span>
-            <span>Powered by TwilightBlog</span>
+            <span>@L["Footer.PoweredBy"]</span>
         </div>
     </footer>
 </div>

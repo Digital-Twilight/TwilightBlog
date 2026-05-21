@@ -1,13 +1,14 @@
 ﻿@page "/post/{Slug}"
 @inject IMarkdownService MarkdownService
+@inject IStringLocalizer<UI> L
 
-<PageTitle>@(_post?.Title ?? "Пост не найден")</PageTitle>
+<PageTitle>@(_post?.Title ?? @L["Page.Post.NotFound"])</PageTitle>
 
 @if (_post is null)
 {
     <div class="not-found">
-        <h2>404 — Пост не найден</h2>
-        <a href="/">← На главную</a>
+        <h2>@L["Page.Post.NotFound"]</h2>
+        <a href="/">@L["NotFound.Back"]</a>
     </div>
 }
 else

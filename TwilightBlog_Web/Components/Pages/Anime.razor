@@ -1,14 +1,15 @@
 ﻿@page "/anime"
 @inject IAnixartService AnixartService
+@inject IStringLocalizer<UI> L
 
-<PageTitle>Аниме</PageTitle>
+<PageTitle>@L["Nav.Anime"]</PageTitle>
 
 <div class="anime-page">
-    <h1 class="page-title">Просмотренное аниме</h1>
+    <h1 class="page-title">@L["Page.Anime.Title"]</h1>
 
     @if (_loading)
     {
-        <p class="loading">Загрузка...</p>
+        <p class="loading">@L["Page.Home.Loading"]</p>
     }
     else if (_error is not null)
     {
@@ -16,11 +17,11 @@
     }
     else if (_titles.Count == 0)
     {
-        <p class="empty">Список пуст.</p>
+        <p class="empty">@L["Page.Anime.Empty"]</p>
     }
     else
     {
-        <p class="anime-page__count">@_titles.Count тайтлов</p>
+        <p class="anime-page__count">@_titles.Count @L["Page.Anime.Count"]</p>
 
         <div class="anime-grid">
             @foreach (var title in _titles)
@@ -44,10 +45,21 @@
                         }
                     </div>
                     <div class="anime-card__info">
-                        <h3 class="anime-card__title">@title.TitleRu</h3>
-                        @if (!string.IsNullOrEmpty(title.TitleOriginal))
+                        @if (L["Lang"].Value == "en")
                         {
-                            <p class="anime-card__original">@title.TitleOriginal</p>
+                            <h3 class="anime-card__title">@title.TitleOriginal</h3>
+                            @if (!string.IsNullOrEmpty(title.TitleRu))
+                            {
+                                <p class="anime-card__original">@title.TitleRu</p>
+                            }
+                        }
+                        else
+                        {
+                            <h3 class="anime-card__title">@title.TitleRu</h3>
+                            @if (!string.IsNullOrEmpty(title.TitleOriginal))
+                            {
+                                <p class="anime-card__original">@title.TitleOriginal</p>
+                            }
                         }
                         <div class="anime-card__meta">
                             @if (title.Year.HasValue)
@@ -60,7 +72,7 @@
                             }
                             @if (title.EpisodesReleased.HasValue)
                             {
-                                <span>@title.EpisodesReleased эп.</span>
+                                <span>@title.EpisodesReleased @L["Page.Anime.Episodes"]</span>
                             }
                         </div>
                         @if (title.Genres.Count > 0)
@@ -96,7 +108,7 @@
         }
         catch (Exception ex)
         {
-            _error = $"Не удалось загрузить список: {ex.Message}";
+            _error = $"{L["Page.Anime.Error"]} {ex.Message}";
         }
         finally
         {

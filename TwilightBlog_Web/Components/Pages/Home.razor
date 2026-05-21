@@ -1,17 +1,18 @@
 ﻿@page "/"
 @inject IMarkdownService MarkdownService
 @inject IWebHostEnvironment Env
+@inject IStringLocalizer<UI> L
 
 <PageTitle>@_blogConfig.CurrentValue.Title</PageTitle>
 
 <div class="posts-list">
     @if (_posts is null)
     {
-        <p class="loading">Загрузка...</p>
+        <p class="loading">@L["Page.Home.Loading"]</p>
     }
     else if (_posts.Count == 0)
     {
-        <p class="empty">Постов пока нет.</p>
+        <p class="empty">@L["Page.Home.Empty"]</p>
     }
     else
     {
