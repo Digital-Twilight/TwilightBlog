@@ -8,7 +8,7 @@ Personal blog template built with Blazor Server — Markdown posts, anime & game
 - 🗂 Archive page with chronological history of posts and site updates
 - 🌸 Animated sakura petals
 - 🖼 Wallpaper support with crossfade slideshow, separate sets for light/dark theme
-- 🎵 SoundCloud music player
+- 🎵 Music player
 - 🎌 Anime page via Anixart API (completed list with personal comments)
 - 🎮 Games page via Steam API (played games sorted by playtime, with comments)
 - 🖥 Devices page (fully config-driven)
@@ -32,7 +32,6 @@ TwilightBlog/
 │   ├── wallpaper.json        # Wallpaper sets per theme
 │   ├── sakura.json           # Sakura animation settings
 │   ├── player.json           # Music player settings
-│   ├── soundcloud.json       # SoundCloud API credentials
 │   ├── anixart.json          # Anixart API credentials and comments
 │   ├── steam.json            # Steam API credentials and comments
 │   └── devices.json          # Devices list
@@ -67,7 +66,6 @@ cd TwilightBlog
 ```bash
 copy configs\anixart.example.json configs\anixart.json
 copy configs\steam.example.json configs\steam.json
-copy configs\soundcloud.example.json configs\soundcloud.json
 ```
 
 3. Edit `configs\blog.json` with your info.
@@ -108,7 +106,6 @@ All configs support hot reload — changes apply without restarting the server.
 | `wallpaper.json` | Wallpaper images per theme, interval, blur, dimming |
 | `sakura.json` | Petal count, speed, size, color, opacity |
 | `player.json` | Volume, autoplay, shuffle |
-| `soundcloud.json` | SoundCloud client ID, OAuth token, playlist URLs |
 | `anixart.json` | Anixart token, user ID, per-title comments |
 | `steam.json` | Steam API key, Steam ID, hidden apps, per-game comments |
 | `devices.json` | Devices list with categories, descriptions and links |

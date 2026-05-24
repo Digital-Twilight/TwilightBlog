@@ -1,0 +1,31 @@
+﻿@implements IDisposable
+
+<span class="typewriter-text">@_displayed<span class="typewriter-cursor">|</span></span>
+
+@code {
+    [Parameter] public string Text { get; set; } = "";
+    [Parameter] public int SpeedMs { get; set; } = 30;
+
+    private string _displayed = "";
+    private CancellationTokenSource _cts = new();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _cts.Cancel();
+        _cts = new CancellationTokenSource();
+        _displayed = "";
+
+        try
+        {
+            foreach (var ch in Text)
+            {
+                _displayed += ch;
+                StateHasChanged();
+                await Task.Delay(SpeedMs, _cts.Token);
+            }
+        }
+        catch (TaskCanceledException) { }
+    }
+
+    public void Dispose() => _cts.Cancel();
+}

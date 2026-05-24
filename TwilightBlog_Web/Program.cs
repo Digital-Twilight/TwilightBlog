@@ -15,7 +15,6 @@ builder.Configuration
     .AddJsonFile(Path.Combine(configsPath, "sakura.json"), optional: false, reloadOnChange: true)
     .AddJsonFile(Path.Combine(configsPath, "wallpaper.json"), optional: false, reloadOnChange: true)
     .AddJsonFile(Path.Combine(configsPath, "player.json"), optional: false, reloadOnChange: true)
-    .AddJsonFile(Path.Combine(configsPath, "soundcloud.json"), optional: false, reloadOnChange: true)
     .AddJsonFile(Path.Combine(configsPath, "steam.json"), optional: false, reloadOnChange: true)
     .AddJsonFile(Path.Combine(configsPath, "anixart.json"), optional: false, reloadOnChange: true)
     .AddJsonFile(Path.Combine(configsPath, "devices.json"), optional: false, reloadOnChange: true);
@@ -31,8 +30,6 @@ builder.Services.Configure<WallpaperConfig>(
     builder.Configuration.GetSection(nameof(WallpaperConfig)));
 builder.Services.Configure<PlayerConfig>(
     builder.Configuration.GetSection(nameof(PlayerConfig)));
-builder.Services.Configure<SoundCloudConfig>(
-    builder.Configuration.GetSection(nameof(SoundCloudConfig)));
 builder.Services.Configure<SteamConfig>(
     builder.Configuration.GetSection(nameof(SteamConfig)));
 builder.Services.Configure<AnixartConfig>(

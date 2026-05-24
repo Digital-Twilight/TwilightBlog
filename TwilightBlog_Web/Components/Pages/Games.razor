@@ -46,19 +46,29 @@
                                      alt=""
                                      loading="lazy" />
                             }
-                            <h3 class="game-card__name">@game.Name</h3>
+                            <a href="https://store.steampowered.com/app/@game.AppId"
+                               target="_blank"
+                               class="game-card__name">@game.Name</a>
                         </div>
                         <div class="game-card__meta">
                             <span class="game-card__playtime">🕐 @FormatPlaytime(game.PlaytimeMinutes)</span>
-                            <a href="https://store.steampowered.com/app/@game.AppId"
-                               target="_blank"
-                               class="game-card__store-link">
-                                Steam →
-                            </a>
                         </div>
                         @if (!string.IsNullOrEmpty(game.UserComment))
                         {
-                            <blockquote class="game-card__comment">@game.UserComment</blockquote>
+                            <div class="game-comment-wrap">
+                                <button class="comment-btn"
+                                        @onclick="() => ToggleComment(game.AppId)">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="var(--md-secondary)">
+                                        <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z" />
+                                    </svg>
+                                </button>
+                                @if (_openComments.Contains(game.AppId))
+                                {
+                                    <div class="comment-bubble">
+                                        <TypewriterText Text="@game.UserComment" />
+                                    </div>
+                                }
+                            </div>
                         }
                     </div>
                 </div>
@@ -71,6 +81,7 @@
     private List<SteamGame> _games = new();
     private bool _loading = true;
     private string? _error;
+    private HashSet<int> _openComments = new();
 
     private string TotalHours =>
         (_games.Sum(g => g.PlaytimeMinutes) / 60).ToString("N0");
@@ -102,5 +113,13 @@
             return mins + " " + m;
 
         return hours + " " + h + " " + mins + " " + m;
+    }
+
+    private void ToggleComment(int id)
+    {
+        if (_openComments.Contains(id))
+            _openComments.Remove(id);
+        else
+            _openComments.Add(id);
     }
 }

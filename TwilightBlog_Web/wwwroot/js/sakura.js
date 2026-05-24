@@ -23,20 +23,51 @@
         document.body.appendChild(this._canvas);
 
         this._resize();
-        window.addEventListener('resize', () => this._resize());
+        window.addEventListener('resize', () => this._handleResize());
 
-        for (let i = 0; i < config.count; i++) {
-            this._petals.push(this._createPetal(true));
-        }
+        this._createPetals();
 
         this._animate();
     },
 
-    _resize: function () {
-        if (!this._canvas) return;
-        this._canvas.width = window.innerWidth;
-        this._canvas.height = window.innerHeight;
-        this._ctx = this._canvas.getContext('2d');
+    _getCount: function () {
+        const count = this._config.count;
+        if (window.innerWidth < 444) return Math.floor(count * 0.4);
+        if (window.innerWidth < 768) return Math.floor(count * 0.6);
+        return count;
+    },
+
+    _handleResize: function () {
+        if (this._canvas) {
+            this._canvas.width = window.innerWidth;
+            this._canvas.height = window.innerHeight;
+            this._ctx = this._canvas.getContext('2d');
+        }
+
+        if (this._resizeTimeout)
+            clearTimeout(this._resizeTimeout);
+
+        const self = this;
+        this._resizeTimeout = function () {
+            const newCount = self._getCount();
+            const currentCount = self._petals.length;
+
+            if (newCount > currentCount) {
+                for (let i = currentCount; i < newCount; i++) {
+                    self._petals.push(self._createPetal(true));
+                }
+            } else if (newCount < currentCount) {
+                self._petals.splice(newCount);
+            }
+        };
+    },
+
+    _createPetals: function () {
+        this._petals = [];
+        const count = this._getCount();
+        for (let i = 0; i < count; i++) {
+            this._petals.push(this._createPetal(true));
+        }
     },
 
     _createPetal: function (randomY = false) {
@@ -55,6 +86,13 @@
             swingSpeed: 0.01 + Math.random() * 0.02,
             swingRadius: 20 + Math.random() * 40,
         };
+    },
+
+    _resize: function () {
+        if (!this._canvas) return;
+        this._canvas.width = window.innerWidth;
+        this._canvas.height = window.innerHeight;
+        this._ctx = this._canvas.getContext('2d');
     },
 
     _drawPetal: function (petal) {
