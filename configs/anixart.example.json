@@ -1,9 +1,10 @@
 {
   "AnixartConfig": {
-    "Token": "",
-    "UserId": "",
+    "Token": "YOUR_TOKEN",
+    "UserId": "YOUR_PROFILE_ID",
+	"CacheMinutes": 60,
     "Comments": {
-      "12345": "Один из лучших сёненов"
+      "20131": "А меня ведь в самом начале предупреждали, всё таки не зря там была эта ссылка..."
     }
   }
 }

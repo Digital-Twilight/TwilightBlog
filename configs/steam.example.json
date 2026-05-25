@@ -1,9 +1,11 @@
 {
   "SteamConfig": {
-    "ApiKey": "",
-    "SteamId": "",
+    "ApiKey": "YOUR_API_KEY",
+    "SteamId": "YOUR_STEAM_ID",
+    "CacheMinutes": 60,
+	"HiddenAppIds": [714010, 1990740, 46370, 1064610, 466240, 283880, 387990, 1755910, 738060, 2222400, 282660, 769920, 304930],
     "Comments": {
-      "440": "Team Fortress 2 — классика"
+	  "2159210" : "In my opinion, the To The Moon series is the best games ever made by humanity. There will not be better games than this masterpiece, at least in my lifetime. You really have to check it out. Thanks to Kan Gao and all the people from Freebird Games for all the emotions I experienced while playing your games. You will be number one in my heart forever."
     }
   }
 }
