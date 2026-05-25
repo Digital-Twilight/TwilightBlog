@@ -1,0 +1,28 @@
+﻿.tb-theme-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--md-on-surface-variant);
+    padding: 8px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, color 0.2s;
+    flex-shrink: 0;
+    margin-left: auto;
+}
+
+    .tb-theme-toggle:hover {
+        background: var(--md-primary-container);
+        color: var(--md-on-primary-container);
+    }
+
+@media (max-width: 768px) {
+    .tb-theme-toggle {
+        position: absolute;
+        top: 12px;
+        right: 16px;
+        margin-left: 0;
+    }
+}
