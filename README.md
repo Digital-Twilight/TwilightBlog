@@ -21,6 +21,7 @@ Personal blog template built with Blazor Server — Markdown posts, anime & game
 - [Blazor Server](https://learn.microsoft.com/en-us/aspnet/core/blazor/) (.NET 9)
 - [Markdig](https://github.com/xoofx/markdig) — Markdown rendering
 - [YamlDotNet](https://github.com/aaubry/YamlDotNet) — Frontmatter parsing
+- [TagLibSharp](https://github.com/mono/taglib-sharp) - Media metadata
 
 ## Project Structure
 ```
@@ -41,6 +42,7 @@ TwilightBlog/
 │   │   └── Pages/            # Home, Post, Archive, Anime, Games, Devices
 │   ├── posts/                # Markdown post files
 │   └── wwwroot/              # Static assets, CSS, JS
+│       └── music/            # Music
 └── TwilightBlog_Core/
     ├── Configuration/        # Config POCOs
     ├── Interfaces/           # Service interfaces
