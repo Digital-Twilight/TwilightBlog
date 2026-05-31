@@ -37,7 +37,7 @@ public class AnixartService : IAnixartService
             if (_cache is not null && DateTime.UtcNow < _cacheExpiry)
                 return _cache;
 
-            List<AnimeTitle> result = new List<AnimeTitle>();
+            List<AnimeTitle> result = [];
             int page = 0;
             AnixartListResponse? json = null;
 
@@ -100,8 +100,6 @@ public class AnixartService : IAnixartService
         EpisodesReleased = item.EpisodesReleased,
         EpisodesTotal = item.EpisodesTotal
     };
-
-    // ===== JSON модели =====
 
     private class AnixartListResponse
     {

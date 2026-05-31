@@ -6,7 +6,6 @@ using TwilightBlog_Web.Components;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-// Подключаем все json-конфиги из папки configs/
 string configsPath = Path.Combine(builder.Environment.ContentRootPath, "..", "configs");
 
 builder.Configuration
@@ -19,7 +18,6 @@ builder.Configuration
     .AddJsonFile(Path.Combine(configsPath, "anixart.json"), optional: false, reloadOnChange: true)
     .AddJsonFile(Path.Combine(configsPath, "devices.json"), optional: false, reloadOnChange: true);
 
-// Регистрируем конфиги через IOptionsMonitor<T>
 builder.Services.Configure<BlogConfig>(
     builder.Configuration.GetSection(nameof(BlogConfig)));
 builder.Services.Configure<PagesConfig>(
@@ -37,11 +35,9 @@ builder.Services.Configure<AnixartConfig>(
 builder.Services.Configure<DevicesConfig>(
     builder.Configuration.GetSection(nameof(DevicesConfig)));
 
-// Markdown сервис
 string postsPath = Path.Combine(builder.Environment.ContentRootPath, "posts");
 builder.Services.AddSingleton<IMarkdownService, MarkdownService>(sp => new MarkdownService(postsPath));
 
-// HTTP клиенты
 builder.Services.AddHttpClient("Steam", client =>
 {
     client.BaseAddress = new Uri("https://api.steampowered.com/");
@@ -74,9 +70,10 @@ builder.Services.AddSingleton<ISteamService>(sp =>
     return new SteamService(http, config);
 });
 
-// Blazor
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+
+builder.Services.AddControllers();
 
 builder.Services.AddLocalization();
 
@@ -106,6 +103,8 @@ app.UseRequestLocalization(new RequestLocalizationOptions
 });
 
 app.UseAntiforgery();
+
+app.MapControllers();
 
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();

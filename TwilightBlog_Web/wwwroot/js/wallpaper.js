@@ -57,7 +57,6 @@
         `;
             document.body.prepend(container);
 
-            // Два слоя
             for (let i = 0; i < 2; i++) {
                 const layer = document.createElement('div');
                 layer.style.cssText = `
@@ -78,14 +77,12 @@
         const layers = container.children;
         const next = this._activeLayer === 0 ? 1 : 0;
 
-        // Загружаем новое фото в скрытый слой
         layers[next].style.backgroundImage = `url('${url}')`;
         layers[next].style.opacity = '1';
         layers[this._activeLayer].style.opacity = '0';
 
         this._activeLayer = next;
 
-        // Overlay
         let overlay = document.getElementById('tb-wallpaper-overlay');
         if (!overlay) {
             overlay = document.createElement('div');

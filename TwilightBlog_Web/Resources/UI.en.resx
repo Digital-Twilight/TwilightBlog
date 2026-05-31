@@ -210,4 +210,7 @@
   <data name="Lang" xml:space="preserve">
     <value>en</value>
   </data>
+  <data name="Footer.PoweredBy.Prefix" xml:space="preserve">
+    <value>Powered by</value>
+  </data>
 </root>

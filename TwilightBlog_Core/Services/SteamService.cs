@@ -81,8 +81,6 @@ public class SteamService : ISteamService
         }
     }
 
-    // ===== JSON модели =====
-
     private class SteamResponse
     {
         [JsonPropertyName("response")]

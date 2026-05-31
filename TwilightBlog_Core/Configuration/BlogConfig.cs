@@ -7,6 +7,7 @@ public class BlogConfig
     public string Author { get; set; } = "";
     public string Description { get; set; } = "";
     public string AvatarUrl { get; set; } = "";
+    public string LogoUrl { get; set; } = "";
     public SocialLinks Social { get; set; } = new();
     public string Language { get; set; } = "ru";
 }

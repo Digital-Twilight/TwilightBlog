@@ -9,7 +9,15 @@
     <SakuraCanvas />
     <nav class="tb-nav">
         <div class="tb-nav__inner">
-            <a href="/" class="tb-nav__brand">@BlogConfig.CurrentValue.Title</a>
+            <a href="/" class="tb-nav__brand">
+    @if (!string.IsNullOrEmpty(BlogConfig.CurrentValue.LogoUrl))
+    {
+        <img src="@BlogConfig.CurrentValue.LogoUrl"
+             alt="@BlogConfig.CurrentValue.Title"
+             class="tb-nav__logo" />
+    }
+    @BlogConfig.CurrentValue.Title
+</a>
             <div class="tb-nav__links">
                 @if (PagesConfig.CurrentValue.Home)
                 {
@@ -111,9 +119,10 @@
     <footer class="tb-footer">
         <div class="tb-footer__inner">
             <span>© @DateTime.Now.Year @BlogConfig.CurrentValue.Author</span>
-            <span>@L["Footer.PoweredBy"]</span>
+            <span>@L["Footer.PoweredBy.Prefix"] <a href="https://github.com/Digital-Twilight/TwilightBlog" target="_blank">TwilightBlog</a></span>
         </div>
     </footer>
+    <MusicPlayer />
 </div>
 
 @code {

@@ -15,3 +15,6 @@ configs/steam.json
 configs/soundcloud.json
 
 !configs/*.example.json
+
+TwilightBlog_Web/wwwroot/music/*
+!TwilightBlog_Web/wwwroot/music/.gitkeep

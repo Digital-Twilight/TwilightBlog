@@ -7,10 +7,12 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Http" Version="10.0.7" />
     <PackageReference Include="Microsoft.Extensions.Localization" Version="10.0.8" />
+    <PackageReference Include="TagLibSharp" Version="2.3.0" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="posts\" />
+    <Folder Include="wwwroot\music\" />
     <Folder Include="wwwroot\wallpapers\" />
   </ItemGroup>
   
