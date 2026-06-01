@@ -1,12 +1,12 @@
 ﻿.player-fab-wrap {
     position: fixed;
-    bottom: 75px;
     right: 24px;
+    bottom: 24px;
     z-index: 9998;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    gap: 0;
+    transition: bottom 0.1s ease;
 }
 
 .player-card {
@@ -227,7 +227,6 @@
 
 @media (max-width: 768px) {
     .player-fab-wrap {
-        bottom: 75px;
         right: 16px;
     }
 

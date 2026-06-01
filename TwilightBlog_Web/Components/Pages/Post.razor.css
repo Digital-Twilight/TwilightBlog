@@ -1,7 +1,7 @@
 ﻿.post-full {
     background: var(--md-surface);
     border-radius: var(--md-shape-lg);
-    padding: 48px 56px;
+    padding: 36px 10%;
     box-shadow: var(--md-elevation-1);
     border: 1px solid var(--md-outline-variant);
 }

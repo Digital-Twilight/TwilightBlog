@@ -339,7 +339,7 @@ a {
     font-size: 0.85rem;
     color: var(--md-on-surface);
     box-shadow: var(--md-elevation-2);
-    min-width: 300px;
+    min-width: 275px;
     max-width: 500px;
     z-index: 10;
     line-height: 1.5;

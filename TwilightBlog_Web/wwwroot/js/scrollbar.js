@@ -16,19 +16,15 @@
         this._track.appendChild(this._thumb);
         document.body.appendChild(this._track);
 
-        this._updateBounds();
-        this._update();
-
+        this.refresh();
         window.addEventListener('scroll', () => {
-            this._updateBounds();
-            this._update();
+            this.refresh();
             this._show();
             this._scheduleHide();
         }, { passive: true });
 
         window.addEventListener('resize', () => {
-            this._updateBounds();
-            this._update();
+            this.refresh();
         }, { passive: true });
 
         this._thumb.addEventListener('mousedown', (e) => this._onDragStart(e));
@@ -55,6 +51,28 @@
         }, { passive: false });
 
         this._scheduleHide();
+    },
+
+    _updatePlayerPosition: function () {
+        const fab = document.querySelector('.player-fab-wrap');
+        const footer = document.querySelector('.tb-footer');
+        if (!fab || !footer) return;
+
+        const footerRect = footer.getBoundingClientRect();
+        const footerVisible = footerRect.top < window.innerHeight;
+
+        if (footerVisible) {
+            const bottom = window.innerHeight - footerRect.top + 12;
+            fab.style.bottom = bottom + 'px';
+        } else {
+            fab.style.bottom = '24px';
+        }
+    },
+
+    refresh: function () {
+        this._updatePlayerPosition();
+        this._updateBounds();
+        this._update();
     },
 
     _updateBounds: function () {

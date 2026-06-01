@@ -164,10 +164,46 @@
 
     next: function () {
         if (this._tracks.length === 0) return;
-        const index = this._shuffle
-            ? Math.floor(Math.random() * this._tracks.length)
-            : (this._currentIndex + 1) % this._tracks.length;
+
+        if (!this._shuffle) {
+            const index = (this._currentIndex + 1) % this._tracks.length;
+            this._playIndex(index);
+            return;
+        }
+
+        // если очередь пуста — пересобираем
+        if (!this._shuffleQueue || this._shuffleQueue.length === 0) {
+            this._buildShuffleQueue();
+        }
+
+        let index = this._shuffleQueue.pop();
+
+        // защита от undefined
+        if (index === undefined) {
+            index = Math.floor(Math.random() * this._tracks.length);
+        }
+
+        // защита от повтора текущего трека (только если есть альтернатива)
+        if (this._tracks.length > 1 && index === this._currentIndex) {
+            index = this._shuffleQueue.pop();
+
+            if (index === undefined || index === this._currentIndex) {
+                index = (this._currentIndex + 1) % this._tracks.length;
+            }
+        }
+
         this._playIndex(index);
+    },
+
+    _buildShuffleQueue: function () {
+        const arr = [...Array(this._tracks.length).keys()];
+
+        for (let i = arr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+
+        this._shuffleQueue = arr;
     },
 
     prev: function () {
@@ -192,6 +228,12 @@
 
     setShuffle: function (shuffle) {
         this._shuffle = shuffle;
+
+        if (shuffle) {
+            this._buildShuffleQueue();
+        } else {
+            this._shuffleQueue = [];
+        }
     },
 
     selectTrack: function (index) {
